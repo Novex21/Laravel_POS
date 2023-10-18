@@ -71,7 +71,7 @@
                                         value="{{$cart->product->price}}">
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control">
+                                        <input type="number" class="form-control"  wire:change='Discount({{ $cart->id }}, $event.target.value)'>
                                     </td>
                                     <td>
                                         <input type="number"  class="form-control total_amount" readonly value="{{$cart->product_price}}">
@@ -100,7 +100,7 @@
                             <input type="hidden" name="quantity[]" value="{{ $cart->product_qty }}">
                             <input type="hidden" name="price[]"  class="form-control price" readonly
                             value="{{$cart->product->price}}">
-                            <input type="hidden" name="discount[]"  class="form-control discount">
+                            <input type="hidden" name="discount[]"  class="form-control discount" value="{{ $cart->discount }}">
                             <input type="hidden" name="total_amount[]"  class="form-control total_amount" readonly value="{{$cart->product_price}}">
 
 
@@ -115,13 +115,13 @@
                                         Print
                                 </button>
                                 <button type="button"
-                                        onclick="PrintReceiptContent()"
+                                        onclick=""
                                         class="btn btn-primary me-1">
                                         <i class="fa-solid fa-lg fa-print me-2"></i>
                                         History
                                 </button>
                                 <button type="button"
-                                        onclick="PrintReceiptContent()"
+                                        onclick=""
                                         class="btn btn-danger me-1">
                                         <i class="fa-solid fa-lg fa-print me-2"></i>
                                         Report

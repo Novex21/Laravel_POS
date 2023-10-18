@@ -40,21 +40,23 @@ class Order extends Component
         $add_to_cart = new Cart();
         $add_to_cart->product_id = $countProduct->id;
         $add_to_cart->product_qty = 1;
+        $add_to_cart->discount= 0;
         $add_to_cart->product_price = $countProduct->price;
         $add_to_cart->user_id = auth()->user()->id;
         $add_to_cart->save();
 
         $this->product_code = '';
-        $this->productInCart->prepend($add_to_cart);
-        // dd($countProduct);
+        $this->productInCart->push($add_to_cart);
         return $this->message = 'Product added to Cart Successfully';
     }
 
     public function IncrementQty($cartId)
-    {
+    {   
+
         $carts = Cart::find($cartId);
         $carts->increment('product_qty',1);
-        $updatePrice = $carts->product_qty * $carts->product->price;
+        
+        $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
         $this->mount();
     }
@@ -67,9 +69,23 @@ class Order extends Component
                 return $this->message = 'Product qty must have at least 1 stock in Cart';
             }
             $carts->decrement('product_qty',1);
-        $updatePrice = $carts->product_qty * $carts->product->price;
+            
+            $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
         $this->mount();
+    }
+
+    public function Discount($cartId,$discountValue) 
+    {
+        $carts = Cart::find($cartId);
+        if ($carts->disount < 0) {
+            return $this->message = "Discount mustn't be lower than 0";
+        }
+        $carts->discount = $discountValue;
+        $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
+        $carts->update(['product_price' => $updatePrice]);
+        $this->mount();
+
     }
 
     public function removeProduct($cartId) {
@@ -93,4 +109,6 @@ class Order extends Component
     {
         return view('livewire.order');
     }
+
+
 }
