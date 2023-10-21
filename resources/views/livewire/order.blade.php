@@ -1,7 +1,14 @@
 <div>
     <div class="col-lg-12">
-        <div class="row">
-            <div class="col-md-9">
+        <div class="row g-2">
+            <div class="col-md-2 border-end border-2 p-3" id="sidenav" style="height:100vh">
+                <ul class="p-0 text-center text-dark text-lg-start nav" style="min-height: 50vh">
+                    @include('layouts.includes.sideBar')
+                    
+                </ul>
+            </div>
+
+            <div class="col-md-10 mt-3 p-3">
                 <div class="card">
 
                     <div class="card-header">
@@ -84,96 +91,13 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="card-footer">
+                        <a href="#" class="float-end btn btn-primary" data-bs-toggle="modal" data-bs-target="#saveCart">
+                            Save & Proceed Payment
+                        </a>
+                    </div>
                 </div>
             </div>
-
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Total  $<b>{{$productInCart->sum('product_price')}}</b></h4>
-                    </div>
-                    <form action="{{route('orders.store')}}" method="POST">
-                        @csrf
-                        @foreach ($productInCart as $key=>$cart )
-
-                            <input type="hidden" name='product_id[]'  value="{{$cart->product->id}}" class="form-control">
-                            <input type="hidden" name="quantity[]" value="{{ $cart->product_qty }}">
-                            <input type="hidden" name="price[]"  class="form-control price" readonly
-                            value="{{$cart->product->price}}">
-                            <input type="hidden" name="discount[]"  class="form-control discount" value="{{ $cart->discount }}">
-                            <input type="hidden" name="total_amount[]"  class="form-control total_amount" readonly value="{{$cart->product_price}}">
-
-
-
-                        @endforeach
-                        <div class="card-body">
-                            <div class="btn-group mb-3">
-                                <button type="button"
-                                        onclick="PrintReceiptContent('print')"
-                                        class="btn btn-dark me-1">
-                                        <i class="fa-solid fa-lg fa-print me-2"></i>
-                                        Print
-                                </button>
-                                <button type="button"
-                                        onclick=""
-                                        class="btn btn-primary me-1">
-                                        <i class="fa-solid fa-lg fa-print me-2"></i>
-                                        History
-                                </button>
-                                <button type="button"
-                                        onclick=""
-                                        class="btn btn-danger me-1">
-                                        <i class="fa-solid fa-lg fa-print me-2"></i>
-                                        Report
-                                </button>
-                            </div>
-                            <div class="panel">
-                                <div class="row mb-2">
-                                    <div class="p-2">
-                                        <label for="name" class="form-label">Customer Name</label>
-                                        <input type="text" name="customer_name" id="name" class="form-control">
-                                    </div>
-                                    <div class="p-2">
-                                        <label for="phone" class="form-label">Customer Phone</label>
-                                        <input type="text" name="customer_phone" id="phone" class="form-control">
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row mb-2">
-                                    <div class="h5">Payment Method</div>
-                                    <div class="form-check form-check-inline ms-3">
-                                        <input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="cash" checked class="true">
-                                        <label class="form-check-label " for="payment_method"><i class="text-success fa-solid fa-wallet fa-lg me-2"></i>Cash</label>
-                                    </div>
-                                    <div class="form-check form-check-inline ms-3">
-                                        <input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="bank transfer"  class="true">
-                                        <label class="form-check-label " for="payment_method"><i class="text-primary fa-solid fa-building-columns fa-lg me-2"></i>Banking</label>
-                                    </div>
-                                    <div class="form-check form-check-inline ms-3">
-                                        <input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="credit Card"  class="true">
-                                        <label class="form-check-label " for="payment_method"><i class="text-danger fa-regular fa-credit-card fa-lg me-2"></i>Credit Card</label>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row mb-2">
-                                    <div class="mb-3">
-                                        <label for="paid_amount" class="form-label">Payment</label>
-                                        <input type="number" class="form-control" id="paid_amount"
-                                        wire:model='pay_money' wire:input="updateBalance" name="paid_amount" placeholder="">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="balance" class="form-label">Return Change</label>
-                                        <input type="number" class="form-control" id="balance"
-                                        wire:model='balance' name="balance" readonly value="{{$balance}}">
-                                    </div>
-                                        <div class="mb-3 row">
-                                        <button class=" ms-4 btn col btn-success" type="submit">SAVE</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
         </div>
     </div>
 
@@ -220,6 +144,103 @@
                             <button class="btn btn-primary btn-lg" type="submit">Save product</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- save cart model --}}
+    <div class="modal right fade" id="saveCart" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog custom modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title mx-3 px-2" id="staticBackdropLabel">Save Cart & Payment</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Total  $<b>{{$productInCart->sum('product_price')}}</b></h4>
+                        </div>
+                        <form action="{{route('orders.store')}}" method="POST">
+                            @csrf
+                            @foreach ($productInCart as $key=>$cart )
+    
+                                <input type="hidden" name='product_id[]'  value="{{$cart->product->id}}" class="form-control">
+                                <input type="hidden" name="quantity[]" value="{{ $cart->product_qty }}">
+                                <input type="hidden" name="price[]"  class="form-control price" readonly
+                                value="{{$cart->product->price}}">
+                                <input type="hidden" name="discount[]"  class="form-control discount" value="{{ $cart->discount }}">
+                                <input type="hidden" name="total_amount[]"  class="form-control total_amount" readonly value="{{$cart->product_price}}">
+    
+                            @endforeach
+                            <div class="card-body">
+                                <div class="btn-group mb-3">
+                                    <button type="button"
+                                            onclick="PrintReceiptContent('print')"
+                                            class="btn btn-dark me-1">
+                                            <i class="fa-solid fa-lg fa-print me-2"></i>
+                                            Print
+                                    </button>
+                                    <button type="button"
+                                            onclick=""
+                                            class="btn btn-primary me-1">
+                                            <i class="fa-solid fa-lg fa-print me-2"></i>
+                                            History
+                                    </button>
+                                    <button type="button"
+                                            onclick=""
+                                            class="btn btn-danger me-1">
+                                            <i class="fa-solid fa-lg fa-print me-2"></i>
+                                            Report
+                                    </button>
+                                </div>
+                                <div class="panel">
+                                    <div class="row mb-2">
+                                        <div class="p-2">
+                                            <label for="name" class="form-label">Customer Name</label>
+                                            <input type="text" name="customer_name" id="name" class="form-control">
+                                        </div>
+                                        <div class="p-2">
+                                            <label for="phone" class="form-label">Customer Phone</label>
+                                            <input type="text" name="customer_phone" id="phone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row mb-2">
+                                        <div class="h5">Payment Method</div>
+                                        <div class="form-check form-check-inline ms-3">
+                                            <input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="cash" checked class="true">
+                                            <label class="form-check-label " for="payment_method"><i class="text-success fa-solid fa-wallet fa-lg me-2"></i>Cash</label>
+                                        </div>
+                                        <div class="form-check form-check-inline ms-3">
+                                            <input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="bank transfer"  class="true">
+                                            <label class="form-check-label " for="payment_method"><i class="text-primary fa-solid fa-building-columns fa-lg me-2"></i>Banking</label>
+                                        </div>
+                                        <div class="form-check form-check-inline ms-3">
+                                            <input class="form-check-input" type="radio" name="payment_method" id="payment_method" value="credit Card"  class="true">
+                                            <label class="form-check-label " for="payment_method"><i class="text-danger fa-regular fa-credit-card fa-lg me-2"></i>Credit Card</label>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row mb-2">
+                                        <div class="mb-3">
+                                            <label for="paid_amount" class="form-label">Payment</label>
+                                            <input type="number" class="form-control" id="paid_amount"
+                                            wire:model='pay_money' wire:input="updateBalance" name="paid_amount" placeholder="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="balance" class="form-label">Return Change</label>
+                                            <input type="number" class="form-control" id="balance"
+                                            wire:model='balance' name="balance" readonly value="{{$balance}}">
+                                        </div>
+                                            <div class="mb-3 row">
+                                            <button class=" ms-4 btn col btn-success" type="submit">SAVE</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

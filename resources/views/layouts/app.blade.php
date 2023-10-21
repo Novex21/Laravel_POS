@@ -26,17 +26,11 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
-                {{-- <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
-                </a> --}}
-                @auth
-                <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                class="btn btn-outline-primary me-3 mb-1">
-                    <i class="fa-solid fa-bars fa-lg"></i>
                 </a>
-                @endauth
 
 
 
@@ -47,15 +41,12 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    @auth
-                        <ul class="navbar-nav me-auto py-2">
-                            @include('layouts.includes.navBar')
-                        </ul>
-                    @endauth
+                    
 
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -71,7 +62,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle mt-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
@@ -93,54 +84,36 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
 
         {{--sidebar Section--}}
 
-        @auth
-        <!-- Modal -->
-        <div class="modal left fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title mx-3 px-2" id="staticBackdropLabel">MENU BAR</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        @include('layouts.includes.sideBar')
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        @endauth
+        
         <!--Styles -->
         <style>
-            .modal.left .modal-dialog {
-                position: absolute;
-                top: 0;
-                left: 0;
-                margin: 0;
+            #sidenav {
+                background-color:#f0f3f4;
             }
-
-            .modal.left .modal-dialog.modal-sm {
-                max-width: 500px;
-
+            #sidenav a span{
+                color: #5d6d7e;
             }
-
-            .modal.left .modal.content {
-                min-height: 100vh;
-                border: 0;
+            #sidenav a  {
+                color: #000000;
             }
-
-            .modal-title {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 20px;
-                font-weight: bolder;
-                text-transform: uppercase;
+           
+            #sidenav li {
+                width: 100%;
+                border-radius: 10px;
+            }
+            #sidenav li:hover {
+                background-color: #3498db;
+                transform: scale(1.1); /* Change the scale factor as needed */
+                transition: transform 0.2s;
+            }
+            #sidenav li:hover a, #sidenav li:hover span{
+                color: #ffff;
             }
         </style>
 

@@ -59,6 +59,7 @@ class Order extends Component
         $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
         $this->mount();
+        return $this->message = 'Product amount increased.';
     }
 
     public function DecrementQty($cartId)
@@ -66,13 +67,14 @@ class Order extends Component
         $carts = Cart::find($cartId);
             if ($carts->product_qty <= 1 ) {
                 $carts->product_qty = 1;
-                return $this->message = 'Product qty must have at least 1 stock in Cart';
+                return $this->message = 'Product qty must have at least 1 stock in Cart !!!';
             }
             $carts->decrement('product_qty',1);
             
             $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
         $this->mount();
+        return $this->message = 'Product amount decreased.';
     }
 
     public function Discount($cartId,$discountValue) 

@@ -31,8 +31,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('/orders', OrderController::class);               //-----.index
 Route::resource('/products', ProductController::class);
-Route::resource('/suppliers', SupplierController::class);
 Route::resource('/users', UserController::class);
-Route::resource('/companies', CompanyController::class);
 Route::resource('/transactions', TransactionController::class);
 

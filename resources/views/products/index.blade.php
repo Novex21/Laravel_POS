@@ -4,8 +4,14 @@
 
     <div class="container-fluid">
         <div class="col-lg-12">
-            <div class="row">
-                <div class="col-md-9">
+            <div class="row g-2">
+                <div class="col-md-2 border-end border-2 p-3" id="sidenav" style="height:100vh">
+                    <ul class="p-0 text-center text-dark text-lg-start nav" style="min-height: 50vh">
+                        @include('layouts.includes.sideBar')
+                        
+                    </ul>
+                </div>
+                <div class="col-md-10 mt-3 p-3">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="float-start">PRODUCT LIST</h4>
@@ -142,16 +148,6 @@
 
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                           <h4>Search products</h4>
-                        </div>
-                        <div class="card-body">
-                            //////////
                         </div>
                     </div>
                 </div>

@@ -1,49 +1,47 @@
-<ul id="sidebar" class="nav flex-column px-3 ">
+ <!-- side navigation-->
+
+        
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">
-            <i class="fa-solid fa-house-chimney fa-lg me-2"></i>
-            <span class="align-middle">Home</span>
+        <a href={{ route('home')}} class="nav-link mb-1 active" aria-current="page">
+            <i class=" fa-fw fa-solid fa-chart-line fa-xl me-3"></i>
+            <span class=" d-none d-md-inline ">Dashboard</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('orders.index') }}">
-            <i class="fa-solid fa-cart-shopping fa-lg me-2"></i>
-            <span class="align-middle">Orders</span>
+        <a href={{ route('users.index') }} class="nav-link mb-1">
+            <i class=" fa-fw fa-solid fa-user fa-xl me-3"></i>
+            <span class=" d-none d-md-inline ">User</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('transactions.index') }}">
-            <i class="fa-solid fa-coins fa-lg me-2"></i>
-            <span class="align-middle">Transaction</span>
+        <a href={{ route('products.index') }} class="nav-link mb-1">
+            <i class=" fa-fw fa-solid fa-basket-shopping fa-xl me-3"></i>
+            <span class=" d-none d-md-inline ">Products</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('products.index') }}">
-            <i class="fa-solid fa-basket-shopping fa-lg me-2"></i>
-            <span class="align-middle">Products</span>
+        <a href={{ route('transactions.index') }} class="nav-link mb-1">
+            <i class=" fa-fw fa-solid fa-coins fa-xl me-3"></i>
+            <span class=" d-none d-md-inline ">Transactions</span>
         </a>
     </li>
-    <hr class="mb-4">
-</ul>
+    <li class="nav-item">
+        <a href={{ route('orders.index') }} class="nav-link mb-1">
+            <i class=" fa-fw fa-solid fa-desktop fa-xl me-3"></i>
+            <span class=" d-none d-md-inline ">Cashier</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="#" class="nav-link mb-1">
+            <i class=" fa-fw fa-solid fa-file fa-xl me-3"></i>
+            <span class=" d-none d-md-inline ">Report</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="#" class="nav-link mb-1">
+            <i class=" fa-fw fa-solid fa-users fa-xl me-3"></i>
+            <span class=" d-none d-md-inline ">Customers</span>
+        </a>
+    </li>
 
-<style>
 
-    #sidebar a {
-        font-size: 1.1rem;
-        padding: 10px;
-        width: 30vh;
-        color:#007BFF;
-        font-weight: bold;
-
-    }
-    #sidebar a.active {
-        background-color: #007BFF;
-        color:white;
-    }
-
-    #sidebar a:hover {
-        color: white;
-        background-color:#007BFF;
-    }
-
-</style>
