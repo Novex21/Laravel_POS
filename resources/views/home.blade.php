@@ -4,7 +4,7 @@
 <div class="container-fluid ">
     <div class="col-lg-12">
         <div class="row g-2">
-            <div class="col-md-2 border-end border-2 p-3" id="sidenav" style="height:100vh">
+            <div class="col-md-2 border-end border-2 p-3" id="sidenav" >
                 <ul class="p-0 text-center text-dark text-lg-start nav" style="min-height: 50vh">
                     @include('layouts.includes.sideBar')
                     

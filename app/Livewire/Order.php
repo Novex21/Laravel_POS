@@ -47,6 +47,7 @@ class Order extends Component
 
         $this->product_code = '';
         $this->productInCart->push($add_to_cart);
+  
         return $this->message = 'Product added to Cart Successfully';
     }
 
@@ -58,7 +59,7 @@ class Order extends Component
         
         $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
-        $this->mount();
+        
         return $this->message = 'Product amount increased.';
     }
 
@@ -73,7 +74,7 @@ class Order extends Component
             
             $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
-        $this->mount();
+        
         return $this->message = 'Product amount decreased.';
     }
 
@@ -84,9 +85,10 @@ class Order extends Component
             return $this->message = "Discount mustn't be lower than 0";
         }
         $carts->discount = $discountValue;
-        $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
+        $updatePrice = $carts->product_qty * $carts->product->price * (1 - (int)$carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
         $this->mount();
+        // return $this->message = '';
 
     }
 
@@ -95,16 +97,14 @@ class Order extends Component
         $deleteCart->delete();
 
         $this->productInCart = $this->productInCart->except($cartId);
-
+       
         return $this->message = 'Product Deleted from Cart Successfully';
     }
 
     public function updateBalance()
-    {   if ($this->pay_money != '') {
-            $totalReturn = (int)$this->pay_money - $this->productInCart->sum('product_price');
-            $this->balance = $totalReturn;
-        }
-
+    {   
+        $totalReturn = (int)$this->pay_money - $this->productInCart->sum('product_price');
+        $this->balance = $totalReturn;
     }
 
     public function render()
