@@ -74,7 +74,10 @@ class OrderController extends Controller
         $transactions->balance = $request->balance;
         $transactions->payment_method = $request->payment_method;
         $transactions->transac_date = date('Y-m-d');
-        $transactions->transac_amount = $order_details->amount;
+        //Total amount in cart
+        $items = Order_Detail::where('order_id',$order_id)->get();
+        $transactions->transac_amount = $items->sum('amount');
+
         $transactions->user_id = auth()->user()->id;
         $transactions->save();
         DB::commit();
@@ -84,18 +87,17 @@ class OrderController extends Controller
         //Last Order History
 
         $products = Product::all();
-        $order_details = Order_Detail::where('order_id',  $order_id)->get();
         $orderBy = Order::where('id',  $order_id)->get();
         $lastID = Order_Detail::max('order_id');
         $order_receipt = Order_Detail::where('order_id', $lastID)->get();
+        $payment = Transaction::where('order_id', $lastID)->get();
 
-        ;
 
-        return view('orders.index', [
+        return view('reports.receipt', [
             'products' => $products,
-            'order_details' => $order_details,
             'customer_orders' => $orderBy,
             'order_receipt' => $order_receipt,
+            'payment' => $payment,
         ]);
 
 

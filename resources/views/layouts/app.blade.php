@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -22,13 +24,16 @@
     <!--Styles -->
     <link rel="stylesheet" href="{{ asset("build/assets/app-041e359a.css")}}">
 
+
+
     @livewireStyles
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm" id="navbar">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
+                    <img src="{{ asset('images/logo.png') }}" alt="Shop Logo" width="50" height="40">
                     {{ config('app.name', 'Laravel') }}
                 </a>
 
@@ -41,12 +46,12 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    
+
 
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        
+
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -87,7 +92,7 @@
         <main>
             @yield('content')
         </main>
-
+        @auth
         <footer class="bg-dark text-light py-5">
             <div class="container">
                 <div class="row text-start">
@@ -115,8 +120,8 @@
                 </div>
             </div>
         </footer>
+        @endauth
 
-        
         <!--Styles -->
         <style>
             #sidenav {
@@ -130,7 +135,7 @@
             #sidenav a  {
                 color: #000000;
             }
-           
+
             #sidenav li {
                 width: 100%;
                 border-radius: 10px;

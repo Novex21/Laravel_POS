@@ -4,7 +4,7 @@
             <div class="col-md-2 border-end border-2 p-3" id="sidenav" >
                 <ul class="p-0 text-center text-dark text-lg-start nav" style="min-height: 50vh">
                     @include('layouts.includes.sideBar')
-                    
+
                 </ul>
             </div>
 
@@ -91,17 +91,11 @@
                             </tbody>
                         </table>
                     </div>
-                   
+
                 </div>
 
                 <div class="card mb-3">
                     <div class="card-header">
-                        <button type="button"
-                                        onclick="PrintReceiptContent('print')"
-                                        class="btn btn-dark me-1 float-end">
-                                        <i class="fa-solid fa-lg fa-print me-2 "></i>
-                                        Print the last order
-                        </button>
                         <h4>Total  $<b>{{$productInCart->sum('product_price')}}</b></h4>
                     </div>
                     <form action="{{route('orders.store')}}" method="POST">
@@ -169,7 +163,7 @@
         </div>
     </div>
 
-    
+
 
     {{--Modal--}}
     <!-- add product modal -->
