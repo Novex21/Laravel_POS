@@ -98,7 +98,7 @@
                 Print the order
 
             </button>
-            <a href="{{ route('orders.index') }}" class="btn btn-lg btn-secondary me-1 mb-4 text-light">Cancel Printing</a>
+            <a href="{{ route('orders.index') }}" class="btn btn-lg btn-secondary me-1 mb-4 text-light">Back</a>
         </div>
     </div>
 

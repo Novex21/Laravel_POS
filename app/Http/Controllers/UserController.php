@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::paginate(5);
         return view('users.index', [
             'users' => $users
         ]);
@@ -73,9 +73,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::find($id);
         if (! $user) {
             return back()->with('Error','User Not Found');
         }
@@ -87,9 +86,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        $user = User::find($id);
+
         if (! $user) {
             return back()->with('Error','User Not Found');
         }

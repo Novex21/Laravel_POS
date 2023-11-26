@@ -2,9 +2,9 @@
 
 @section('content')
 
-    <div class="container-fluid">
-        <livewire:order/>
-    </div>
+
+   <livewire:order/>
+
 
     <style>
         .modal.right.custom .modal-dialog.custom {

@@ -6,7 +6,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Livewire\ShowTransactions;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -22,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 
 
@@ -34,4 +36,6 @@ Route::resource('/orders', OrderController::class);               //-----.index
 Route::resource('/products', ProductController::class);
 Route::resource('/users', UserController::class);
 Route::resource('/transactions', TransactionController::class);
+
+
 

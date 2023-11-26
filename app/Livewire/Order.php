@@ -47,19 +47,19 @@ class Order extends Component
 
         $this->product_code = '';
         $this->productInCart->push($add_to_cart);
-  
+
         return $this->message = 'Product added to Cart Successfully';
     }
 
     public function IncrementQty($cartId)
-    {   
+    {
 
         $carts = Cart::find($cartId);
         $carts->increment('product_qty',1);
-        
+
         $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
-        
+
         return $this->message = 'Product amount increased.';
     }
 
@@ -71,14 +71,14 @@ class Order extends Component
                 return $this->message = 'Product qty must have at least 1 stock in Cart !!!';
             }
             $carts->decrement('product_qty',1);
-            
+
             $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
-        
+
         return $this->message = 'Product amount decreased.';
     }
 
-    public function Discount($cartId,$discountValue) 
+    public function Discount($cartId,$discountValue)
     {
         $carts = Cart::find($cartId);
         if ($carts->disount < 0) {
@@ -88,7 +88,6 @@ class Order extends Component
         $updatePrice = $carts->product_qty * $carts->product->price * (1 - (int)$carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
         $this->mount();
-        // return $this->message = '';
 
     }
 
@@ -97,12 +96,12 @@ class Order extends Component
         $deleteCart->delete();
 
         $this->productInCart = $this->productInCart->except($cartId);
-       
+
         return $this->message = 'Product Deleted from Cart Successfully';
     }
 
     public function updateBalance()
-    {   
+    {
         $totalReturn = (int)$this->pay_money - $this->productInCart->sum('product_price');
         $this->balance = $totalReturn;
     }

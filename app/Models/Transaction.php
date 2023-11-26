@@ -18,4 +18,9 @@ class Transaction extends Model
         'user_id',
         'payment_method'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

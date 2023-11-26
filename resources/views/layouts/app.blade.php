@@ -90,36 +90,25 @@
         </nav>
 
         <main>
-            @yield('content')
-        </main>
-        @auth
-        <footer class="bg-dark text-light py-5">
-            <div class="container">
-                <div class="row text-start">
-                    <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
-                        <h4>Company Name</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                    <div class="col-lg col-md-6 mb-4 mb-lg-0">
-                        <h4>Quick Links</h4>
-                        <ul class="list-unstyled">
-                            <li><a class="text-light" href="#">Home</a></li>
-                            <li><a class="text-light" href="#">About Us</a></li>
-                            <li><a class="text-light" href="#">Services</a></li>
-                            <li><a class="text-light" href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg col-md-12">
-                        <h4>Follow Us</h4>
-                        <ul class="list-unstyled">
-                            <li><a class="text-light" href="#"><i class="fa fa-lg fa-facebook me-1"></i> Facebook</a></li>
-                            <li><a class="text-light" href="#"><i class="fa fa-lg fa-twitter me-1"></i> Twitter</a></li>
-                            <li><a class="text-light" href="#"><i class="fa fa-lg fa-linkedin me-1"></i> LinkedIn</a></li>
-                        </ul>
+            <div class="container-fluid ">
+                <div class="col-lg-12">
+                    <div class="row g-2">
+                        <div class="col-md-2 border-end border-2 p-3" id="sidenav" >
+                            <ul class="p-0 text-center text-dark text-lg-start nav" style="min-height: 50vh">
+                                @include('layouts.includes.sideBar')
+
+                            </ul>
+                        </div>
+                        <div class="col-md-10 mt-3 p-3">
+
+                            @yield('content')
+                        </div>
                     </div>
                 </div>
             </div>
-        </footer>
+        </main>
+        @auth
+            @include('layouts.includes.footer')
         @endauth
 
         <!--Styles -->
@@ -141,13 +130,22 @@
                 border-radius: 10px;
             }
             #sidenav li:hover {
-                background-color: #3498db;
+                background-color: #6d7478;
                 transform: scale(1.1); /* Change the scale factor as needed */
-                transition: transform 0.2s;
+                transition: transform 0.1s;
             }
             #sidenav li:hover a, #sidenav li:hover span{
                 color: #ffff;
             }
+            #sidenav li.active a, #sidenav li.active span{
+                color: #ffffff;
+            }
+            #sidenav li.active {
+                background-color: #3498db;
+                transform: scale(1.0); /* Change the scale factor as needed */
+                transition: transform 0.1s;
+            }
+
         </style>
 
 
