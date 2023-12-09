@@ -8,6 +8,8 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Livewire\ShowTransactions;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 
 
@@ -36,6 +38,7 @@ Route::resource('/orders', OrderController::class);               //-----.index
 Route::resource('/products', ProductController::class);
 Route::resource('/users', UserController::class);
 Route::resource('/transactions', TransactionController::class);
+
 
 
 

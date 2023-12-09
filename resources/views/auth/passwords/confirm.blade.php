@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('auth.layout')
 
-@section('content')
-<div class="container">
+@section('authSection')
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
+                <div class="card-header bg-dark text-light fw-bold text-center">{{ __('Confirm Password') }}</div>
 
                 <div class="card-body">
                     {{ __('Please confirm your password before continuing.') }}
@@ -45,5 +44,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

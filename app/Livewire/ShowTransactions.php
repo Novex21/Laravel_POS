@@ -9,12 +9,22 @@ use Livewire\WithPagination;
 class ShowTransactions extends Component
 {
     use WithPagination;
+
+
     public $search = '';
+    public $sortBy = 'order_id';
+    public $sortDirection = 'desc';
 
     public function reboot()
     {
         $this->search='';
         $this->render();
+    }
+
+
+    public function sort()
+    {
+        $this->sortDirection = $this->sortDirection === 'desc' ? 'asc' : 'desc';
     }
 
     public function render()
@@ -30,17 +40,15 @@ class ShowTransactions extends Component
                       ->orWhere('transactions.transac_date', 'LIKE', '%' . $search. '%')
                       ->orWhere('users.name', 'LIKE', '%' . $search . '%');
             })
-            ->orderBy('transactions.id','DESC')->paginate(10);
+            ->select(
+                'transactions.*',
+                'users.name as user_name',
+            )
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate(10);
         return view('livewire.show-transactions',[
             'transacs' => $transac
         ]);
-
-        // $transac = Transaction::where('order_id', 'like', '%'.$this->search.'%')
-        // ->orderBy('id','DESC')->paginate(10);
-        // return view('livewire.show-transactions',[
-        //     'transacs' => $transac
-        // ]);
     }
 }
-// $searchTerm = 'your_pattern';
 

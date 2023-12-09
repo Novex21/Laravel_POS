@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('auth.layout')
 
-@section('content')
-<div class="container">
+@section('authSection')
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+                <div class="card-header bg-dark text-light fw-bold text-center>{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -43,5 +42,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

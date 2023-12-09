@@ -14,11 +14,23 @@
     </div>
 
     <div class="row no-gutters flex-lg-nowrap mb-3">
-        <div class='col-lg-3'>
-            <form wire:submit="reboot" class="btn-group" >
-                <input type="search" wire:model.live="search" class="form-control" placeholder="Searh....">
-                <button class="btn btn-sm btn-primary" type="submit">Reset</button>
-            </form>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 btn-group">
+            <select class="form-control" wire:model.live='sortBy' id="select">
+                <option value="order_id">Order No.</option>
+                <option value="transac_amount">Total Amount</option>
+                <option value="paid_amount">Paid Amount</option>
+                <option value="balance">Change</option>
+                <option value="transac_date">Date</option>
+            </select>
+            <button class="btn btn-sm btn-primary" wire:click='sort'>Sort</button>
+
+        </div>
+        <div class='col-lg-4'>
+            <div class="btn-group" >
+                <input type="search" wire:model.live="search"  class="form-control" placeholder="Searh....">
+                <button class="btn btn-sm btn-primary" wire:click='reboot'>Reset</button>
+            </div>
         </div>
     </div>
     <div class="card mb-4">
