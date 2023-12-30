@@ -31,7 +31,34 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        Product::create($request->all());
+        $validator = validator(request()->all(), [
+            'name'=> 'required',
+            'description' => 'required',
+            'brand' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'alert_stock' => 'required',
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,svg,gif|max:5120'
+        ]);
+        if($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+        $product = new Product;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->brand = $request->brand;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->alert_stock = $request->alert_stock;
+        if($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('productPhotos','public');
+           $product->photo = $path;
+        }else {
+            $path = 'productPhotos/product_default.jpeg';
+           $product->photo = $path;
+        }
+       $product->save();
+
         return redirect()->back()->with('Success', 'Product Created Successfully');
 
     }
@@ -55,10 +82,30 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        Product::find($id)->update($request->all());
-        return redirect()->back()->with('Success', 'Product Created Successfully');
+        if(! $product) return back()->with('Error','Product Not Found');
+
+        $validator = validator(request()->all(), [
+            'name'=> 'required',
+            'description' => 'required',
+            'brand' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'alert_stock' => 'required',
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,svg,gif|max:5120'
+        ]);
+
+        if($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        if($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('productPhotos','public');
+            $product->photo = $path;
+        }
+
+        $product->update($request->all());
+        return redirect()->back()->with('Success', 'Product Updated Successfully');
     }
 
     /**

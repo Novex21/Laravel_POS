@@ -28,7 +28,7 @@
     <style>
         body {
             margin: 0;
-            background-image: url('https://img.freepik.com/free-vector/abstract-banner-with-low-poly-plexus-network-communications-design_1048-12914.jpg?w=1480&t=st=1700923698~exp=1700924298~hmac=2ee8fdee3275f8b061e5d7c4b07e4794890c50f7005da7e7e402f0498306e1f2');
+            background-image: url("/images/appbg.jpeg");
             background-position: center center;
             background-repeat: no-repeat;
             background-size: cover;

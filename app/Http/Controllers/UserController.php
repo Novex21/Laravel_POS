@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -32,23 +32,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = validator(request()->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'password' => 'required',
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,svg,gif|max:5120'
+        ]);
+        if($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = Hash::make($request->password);
         $user->is_admin = $request->is_admin;
-        $user->save();
-
-        $validator = validator(request()->all(), [
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'password' => 'required',
-        ]);
-        if($validator->fails()) {
-            return back()->withErrors($validator);
+        if($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('userPhotos','public');
+            $user->photo = $path;
+        }else {
+            $path = 'userPhotos/profile_default.jpeg';
+            $user->photo = $path;
         }
+        $user->save();
 
         return redirect(route('users.index'));
 
@@ -75,9 +83,24 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if (! $user) {
-            return back()->with('Error','User Not Found');
+        if (! $user) return back()->with('Error','User Not Found');
+
+
+        $validator = validator(request()->all(), [
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,svg,gif|max:5120'
+        ]);
+
+        if($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
         }
+        if($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('userPhotos','public');
+            $user->photo = $path;
+        }
+
         $user->update($request->all());
         return back()->with('Success', 'User Updated Succeessfully');
 

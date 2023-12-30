@@ -40,5 +40,3 @@ Route::resource('/users', UserController::class);
 Route::resource('/transactions', TransactionController::class);
 
 
-
-

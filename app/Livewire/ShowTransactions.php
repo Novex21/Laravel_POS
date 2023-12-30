@@ -22,9 +22,13 @@ class ShowTransactions extends Component
     }
 
 
-    public function sort()
+    public function sortASC()
     {
-        $this->sortDirection = $this->sortDirection === 'desc' ? 'asc' : 'desc';
+        $this->sortDirection = 'asc';
+    }
+    public function sortDESC()
+    {
+        $this->sortDirection = 'desc';
     }
 
     public function render()

@@ -2,11 +2,10 @@
 
 @section('content')
 
-
     <div class="card">
         <div class="card-header">
             <h4 class="float-start">USERS TABLE</h4>
-            <a href="#" class="float-end btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser">
+            <a href="{{ route('users.create') }}" class="float-end btn btn-primary"> {{-- data-bs-toggle="modal" data-bs-target="#addUser" --}}
                 <i class="fa fa-plus fa-lg me-3"></i>
                 Add New Users
             </a>
@@ -17,6 +16,7 @@
                 <thead class="text-center">
                     <tr class="h5">
                         <th>No.</th>
+                        <th>Profile</th>
                         <th>Name</th>
                         <th>Email Address</th>
                         <th>Phone Number</th>
@@ -24,10 +24,14 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody class="text-center" style="vertical-align: middle">
                     @foreach ($users as $key => $user )
                     <tr>
                         <td>{{$key + 1}}</td>
+                        <td>
+                            <img class="rounded" width="50" height="55"
+                            src='{{ asset("storage/$user->photo")}}' alt="No Image">
+                        </td>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
                         <td>{{$user->phone}}</td>
@@ -60,7 +64,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{route('users.update', $user->id)}}" method="POST">
+                                    <form action="{{route('users.update', $user->id)}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
                                         <div class="form-floating mb-3">
@@ -78,7 +82,7 @@
                                             value="{{$user->phone}}" placeholder="1122333" >
                                             <label for="floatingInput">Phone</label>
                                         </div>
-                                        <div class="form-floating">
+                                        <div class="form-floating mb-3">
                                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example" id="role" name="is_admin">
                                             <option value="1" @if ($user->is_admin == 1)
                                                 selected
@@ -88,6 +92,10 @@
                                             @endif>Cashier</option>
                                             </select>
                                             <label for="floatingSelect">Select Roles</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="file" class="form-control" id="floatingInput" name='photo'>
+                                            <label for="floatingInput">Choose Profile Photo</label>
                                         </div>
 
                                         <div class="modal-footer">
@@ -136,7 +144,7 @@
 
 
     {{-- Add new user --}}
-    <div class="modal custom right fade" id="addUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    {{-- <div class="modal custom right fade" id="addUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog custom">
             <div class="modal-content">
                 <div class="modal-header">
@@ -144,7 +152,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('users.store', $user->id) }}" method="POST">
+                    <form action="{{ route('users.store', $user->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-floating mb-3">
@@ -167,12 +175,16 @@
                             <input type="password" class="form-control" id="floatingInput" name='confirm_password' required>
                             <label for="floatingInput">Confirm Password</label>
                         </div>
-                        <div class="form-floating">
+                        <div class="form-floating mb-3">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example" id="role" name='is_admin'>
                               <option value="1">Admin</option>
                               <option value="2">Cashier</option>
                             </select>
                             <label for="floatingSelect">Select Roles</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="file" class="form-control" id="floatingInput" name='photo'>
+                            <label for="floatingInput">Choose Profile Photo</label>
                         </div>
 
                         <div class="modal-footer">
@@ -184,7 +196,7 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
 

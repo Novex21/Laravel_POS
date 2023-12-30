@@ -65,14 +65,14 @@
                             </div>
                         </td>
                         <td>
-                            <input type="number" class="form-control" readonly
+                            <input type="float" class="form-control" readonly
                             value="{{$cart->product->price}}">
                         </td>
                         <td>
                             <input type="number" class="form-control"  wire:change='Discount({{ $cart->id }}, $event.target.value)'>
                         </td>
                         <td>
-                            <input type="number"  class="form-control total_amount" readonly value="{{$cart->product_price}}">
+                            <input type="float"  class="form-control total_amount" readonly value="{{$cart->product_price}}">
                         </td>
                         <td class="text-center align-middle">
                             <a href="#" class="btn btn-sm btn-danger"><i class="fa-solid fa-lg fa-xmark" wire:click='removeProduct({{$cart->id}})'></i></a>
@@ -134,13 +134,13 @@
                     <div class="row">
                         <div class="mb-3">
                             <label for="paid_amount" class="form-label">Payment</label>
-                            <input type="number" class="form-control" id="paid_amount"
+                            <input type="float" class="form-control" id="paid_amount"
                                 wire:model.live='pay_money' wire:input='updateBalance()' name="paid_amount" placeholder="">
                         </div>
                         <div class="mb-3" >
                             <label for="balance" class="form-label">Return Change</label>
-                            <input type="number" class="form-control" id="balance"
-                            wire:model.live='balance' name="balance" readonly value="{{$balance}}">
+                            <input type="float" class="form-control" id="balance"
+                            wire:model.live='balance' name="balance" readonly value="number_format({{$balance}},2)">
                         </div>
                         <div>
                             <button class=" float-end ms-4 btn  btn-lg btn-success" type="submit">SAVE</button>
@@ -178,7 +178,7 @@
                             <label for="floatingInput">Brand Name</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatingInput" name="price" placeholder="####" required>
+                            <input type="float" class="form-control" id="floatingInput" name="price" placeholder="####" required>
                             <label for="floatingInput">Price</label>
                         </div>
                         <div class="form-floating mb-3">

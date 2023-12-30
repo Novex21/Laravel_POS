@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('brand');
-            $table->integer('price');
+            $table->float('price');
             $table->integer('quantity');
             $table->integer('alert_stock')->default('50');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

@@ -1,9 +1,9 @@
 <div>
     <div class="row g-2 mb-4">
         <div class="col col-md-6">
-            <h4>Transactions List</h4>
+            <h4 class="text-light">Transactions List</h4>
 
-            <p>Sales enables you to effectively control sales KPIs and monitor them in one central
+            <p class="text-light">Sales enables you to effectively control sales KPIs and monitor them in one central
                 place while helping teams to reach sales goals.
             </p>
         </div>
@@ -15,7 +15,7 @@
 
     <div class="row no-gutters flex-lg-nowrap mb-3">
         <div class="col-lg-4"></div>
-        <div class="col-lg-4 btn-group">
+        <div class="col-lg-4 btn-group me-0">
             <select class="form-control" wire:model.live='sortBy' id="select">
                 <option value="order_id">Order No.</option>
                 <option value="transac_amount">Total Amount</option>
@@ -23,11 +23,12 @@
                 <option value="balance">Change</option>
                 <option value="transac_date">Date</option>
             </select>
-            <button class="btn btn-sm btn-primary" wire:click='sort'>Sort</button>
+            <button class="btn btn btn-primary" wire:click='sortASC'><i class="fa-solid fa-arrow-up"></i></button>
+            <button class="btn btn btn-primary" wire:click='sortDESC'><i class="fa-solid fa-arrow-down"></i></button>
 
         </div>
         <div class='col-lg-4'>
-            <div class="btn-group" >
+            <div class="btn-group ms-5 me-0" >
                 <input type="search" wire:model.live="search"  class="form-control" placeholder="Searh....">
                 <button class="btn btn-sm btn-primary" wire:click='reboot'>Reset</button>
             </div>

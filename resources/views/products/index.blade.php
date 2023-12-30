@@ -17,20 +17,27 @@
                 <thead class="text-center">
                     <tr class="h5">
                         <th>No.</th>
+                        <th>Image</th>
                         <th>Product Name</th>
                         <th>Brand Name</th>
+                        <th>Info</th>
                         <th>Price</th>
                         <th>Qty</th>
                         <th>Alert Stock</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody class="text-center" style="vertical-align: middle">
                     @foreach ($products as $key => $product )
                     <tr>
                         <td>{{$key + 1}}</td>
+                        <td>
+                            <img class="rounded" width="50" height="55"
+                            src='{{ asset("storage/$product->photo")}}' alt="Image Error">
+                        </td>
                         <td>{{$product->name}}</td>
                         <td>{{$product->brand}}</td>
+                        <td>{{$product->description}}</td>
                         <td>{{number_format($product->price, 2)}}</td>
                         <td>{{$product->quantity}}</td>
                         <td>@if ($product->alert_stock >= $product->quantity)
@@ -62,7 +69,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{route('products.update', $product->id)}}" method="POST">
+                                    <form action="{{route('products.update', $product->id)}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('put')
                                         <div class="form-floating mb-3">
@@ -90,10 +97,14 @@
                                             value="{{$product->alert_stock}}" placeholder="####" required>
                                             <label for="floatingInput">Alert Stock </label>
                                         </div>
-                                        <div class="form-floating">
+                                        <div class="form-floating mb-3">
                                             <textarea class="form-control" name="description" placeholder="###"
                                             id="floatingTextarea">{{$product->description}}</textarea>
                                             <label for="floatingTextarea">Description For Product</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="file" class="form-control" id="floatingInput" name='photo'>
+                                            <label for="floatingInput">Choose Product Photo</label>
                                         </div>
 
                                         <div class="modal-footer">
@@ -153,7 +164,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('products.store')}}" method="POST">
+                    <form action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" name="name" placeholder="Name" required>
@@ -165,7 +176,7 @@
                             <label for="floatingInput">Brand Name</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatingInput" name="price" placeholder="####" required>
+                            <input type="float" class="form-control" id="floatingInput" name="price" placeholder="####" required>
                             <label for="floatingInput">Price</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -176,11 +187,14 @@
                             <input type="number" class="form-control" id="floatingInput" name="alert_stock" placeholder="####" required>
                             <label for="floatingInput">Alert Stock </label>
                         </div>
-                        <div class="form-floating">
+                        <div class="form-floating mb-3">
                             <textarea class="form-control" name="description" placeholder="###" id="floatingTextarea"></textarea>
                             <label for="floatingTextarea">Description For Product</label>
                         </div>
-
+                        <div class="form-floating mb-3">
+                            <input type="file" class="form-control" id="floatingInput" name='photo'>
+                            <label for="floatingInput">Choose Product Photo</label>
+                        </div>
                         <div class="modal-footer">
                             <button class="btn btn-primary btn-lg" type="submit">Save product</button>
                         </div>

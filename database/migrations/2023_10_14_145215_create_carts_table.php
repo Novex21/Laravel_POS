@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('product_id')->unsigned();
             $table->integer('product_qty')->default(1);
             $table->integer('discount')->default(0);
-            $table->integer('product_price')->default(1);
+            $table->float('product_price')->default(1);
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
