@@ -7,10 +7,6 @@
                 place while helping teams to reach sales goals.
             </p>
         </div>
-        <div class="col col-md-6">
-
-        </div>
-
     </div>
 
     <div class="row no-gutters flex-lg-nowrap mb-3">
@@ -70,6 +66,7 @@
     </div>
 
 </div>
+
 
 
 

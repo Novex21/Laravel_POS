@@ -58,7 +58,8 @@ class UserController extends Controller
         }
         $user->save();
 
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with('Success', 'User Created Successfully');
+        exit();
 
     }
 
@@ -73,9 +74,15 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        if (! $user) {
+            return back()->with('Error','User Not Found');
+        }
+        return view('users.edit',[
+            'user' => $user,
+        ]);
+        exit();
     }
 
     /**
@@ -102,7 +109,8 @@ class UserController extends Controller
         }
 
         $user->update($request->all());
-        return back()->with('Success', 'User Updated Succeessfully');
+        return redirect(route('users.index'))->with('Success', 'User Updated Succeessfully');
+        exit();
 
     }
 
@@ -117,6 +125,7 @@ class UserController extends Controller
         }
         $user->delete();
         return back()->with('Success', 'User Deleted Succeessfully');
+        exit();
 
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -16,6 +17,7 @@ class ProductController extends Controller
         return view('products.index', [
             'products' => $products
         ]);
+        exit();
     }
 
     /**
@@ -23,7 +25,12 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('products.create', [
+            'categories'=>$categories
+        ]);
+        exit();
+
     }
 
     /**
@@ -38,6 +45,7 @@ class ProductController extends Controller
             'price' => 'required',
             'quantity' => 'required',
             'alert_stock' => 'required',
+            'category_id'=> 'required',
             'photo' => 'sometimes|image|mimes:jpeg,png,jpg,svg,gif|max:5120'
         ]);
         if($validator->fails()) {
@@ -50,6 +58,7 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->quantity = $request->quantity;
         $product->alert_stock = $request->alert_stock;
+        $product->category_id = $request->category_id;
         if($request->hasFile('photo')) {
             $path = $request->file('photo')->store('productPhotos','public');
            $product->photo = $path;
@@ -59,7 +68,8 @@ class ProductController extends Controller
         }
        $product->save();
 
-        return redirect()->back()->with('Success', 'Product Created Successfully');
+        return redirect(route('products.index'))->with('Success', 'Product Created Successfully');
+        exit();
 
     }
 
@@ -74,9 +84,16 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+        if(! $product) return back()->with('Error','Product Not Found');
+        $categories = Category::all();
+        return view('products.edit',[
+            'product' => $product,
+            'categories' => $categories
+        ]);
+        exit();
+
     }
 
     /**
@@ -93,6 +110,7 @@ class ProductController extends Controller
             'price' => 'required',
             'quantity' => 'required',
             'alert_stock' => 'required',
+            'category_id' => 'required',
             'photo' => 'sometimes|image|mimes:jpeg,png,jpg,svg,gif|max:5120'
         ]);
 
@@ -105,15 +123,22 @@ class ProductController extends Controller
         }
 
         $product->update($request->all());
-        return redirect()->back()->with('Success', 'Product Updated Successfully');
+        return redirect(route('products.index'))->with('Success', 'Product Updated Successfully');
+        exit();
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        Product::find($id)->delete();
+        if (! $product) {
+            return back()->with('Error','Product Not Found');
+        }
+        $product->delete();
         return redirect()->back()->with('Success', 'Product Deleted Successfully');
+        exit();
+
     }
 }

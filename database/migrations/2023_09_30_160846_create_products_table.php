@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('brand');
             $table->float('price');
             $table->integer('quantity');
-            $table->integer('alert_stock')->default('50');
+            $table->integer('alert_stock');
+            $table->integer('category_id');
             $table->string('photo')->nullable();
             $table->timestamps();
         });

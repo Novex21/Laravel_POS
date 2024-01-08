@@ -49,6 +49,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function transaction()
     {
-        return $this->hasMany('App\Models\Transaction');
+        return $this->hasMany(Transaction::class);
     }
 }

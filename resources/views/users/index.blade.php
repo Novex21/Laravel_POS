@@ -41,7 +41,7 @@
                         </td>
                         <td>
                             <div class="button-group">
-                                <a class="btn btn-sm btn-info me-1" href="#" data-bs-toggle="modal" data-bs-target="#editUser{{$user->id}}">
+                                <a class="btn btn-sm btn-info me-1" href="{{ route('users.edit', $user->id) }}" >     {{-- data-bs-toggle="modal" data-bs-target="#editUser{{$user->id}}" --}}
                                     <i class="fa fa-edit fa-lg me-2"></i>
                                     Edit User
                                 </a>

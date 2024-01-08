@@ -60,7 +60,7 @@
                             Products List
                         </a>
                     </li>
-                    <li class="sidebar-item">
+                    <li class="sidebar-item {{ Route::currentRouteName() === 'products.create' ? 'active' : '' }}">
                         <a href={{ route('products.create') }} class="sidebar-link">
                             <i class=" fa-fw fa-solid fa-square-plus pe-2"></i>
                             Create Product
@@ -70,12 +70,6 @@
                         <a href="#" class="sidebar-link">
                             <i class=" fa-fw fa-solid fa-layer-group pe-2"></i>
                             Category
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
-                            <i class=" fa-fw fa-solid fa-tag pe-2"></i>
-                            Brands
                         </a>
                     </li>
                 </ul>
