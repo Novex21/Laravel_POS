@@ -53,7 +53,7 @@ class ShowProducts extends Component
                 'categories.name as category_name',
             )
             ->orderBy($this->sortBy, $this->sortDirection)
-            ->paginate(10);
+            ->paginate(5);
 
             $categories = Category::all();
         return view('livewire.show-products',[

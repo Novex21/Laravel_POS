@@ -3,35 +3,39 @@
 namespace App\Livewire;
 
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Product;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Ramsey\Uuid\Type\Integer;
 
 class Order extends Component
 {
+    use WithPagination;
+
+    public $search = '';
+    public $selectCategory = null;
+
     public $orders;
-    public $product_code;
     public $message = '';
-    public $products = [];
     public $productInCart;
     public $pay_money;
     public $balance;
 
     public function mount ()
     {
-        $this->products = Product::all();
         $this->productInCart = Cart::all();
     }
 
-    public function insertToCart()
+    public function insertToCart($id)
     {
-        $countProduct = Product::where('id',$this->product_code)->first();
+        $countProduct = Product::where('id',$id)->first();
 
         if (!$countProduct) {
             return $this->message = 'Product not Found';
         }
 
-        $countCartProduct=Cart::where('product_id',$this->product_code)->count();
+        $countCartProduct=Cart::where('product_id',$id)->count();
 
         if ($countCartProduct > 0) {
             return $this->message = 'Product ' .  $countProduct->name . ' is already added in cart';
@@ -45,7 +49,6 @@ class Order extends Component
         $add_to_cart->user_id = auth()->user()->id;
         $add_to_cart->save();
 
-        $this->product_code = '';
         $this->productInCart->push($add_to_cart);
 
         return $this->message = 'Product added to Cart Successfully';
@@ -59,6 +62,7 @@ class Order extends Component
 
         $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
+        $this->mount();
 
         return $this->message = 'Product amount increased.';
     }
@@ -74,6 +78,7 @@ class Order extends Component
 
             $updatePrice = $carts->product_qty * $carts->product->price * (1 - $carts->discount/100);
         $carts->update(['product_price' => $updatePrice]);
+        $this->mount();
 
         return $this->message = 'Product amount decreased.';
     }
@@ -108,7 +113,20 @@ class Order extends Component
 
     public function render()
     {
-        return view('livewire.order');
+        $products = Product::leftJoin('categories', 'products.category_id', '=', 'categories.id')
+        ->when($this->selectCategory, function ($query) {
+            $query->where('categories.id', $this->selectCategory);
+        })
+        ->select(
+            'products.*',
+            'categories.name as category_name'
+        )->paginate(10);
+
+        $categories = Category::all();
+        return view('livewire.order',[
+            'categories' => $categories,
+            'products' => $products,
+        ]);
     }
 
 

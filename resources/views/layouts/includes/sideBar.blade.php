@@ -66,10 +66,16 @@
                             Create Product
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                    <li class="sidebar-item {{ Route::currentRouteName() === 'categories.index' ? 'active' : '' }}">
+                        <a href={{ route('categories.index') }} class="sidebar-link">
                             <i class=" fa-fw fa-solid fa-layer-group pe-2"></i>
                             Category
+                        </a>
+                    </li>
+                    <li class="sidebar-ite{{ Route::currentRouteName() === 'categories.create' ? 'active' : '' }}m ">
+                        <a href={{ route('categories.create') }} class="sidebar-link">
+                            <i class=" fa-fw fa-solid fa-square-plus pe-2"></i>
+                            Create Category
                         </a>
                     </li>
                 </ul>

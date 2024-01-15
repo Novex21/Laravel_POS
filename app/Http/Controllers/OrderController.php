@@ -66,6 +66,19 @@ class OrderController extends Controller
             $order_details->save();
         }
 
+        //Reduce Stock
+        $stocks = Order_Detail::where('order_id', $order_id)->get();
+
+        foreach($stocks as $stock) {
+            $product_id = $stock->product_id;
+            $product_qty = $stock->quantity;
+
+            Product::where('id', $product_id)->update([
+                'quantity' => DB::raw("quantity - $product_qty")
+            ]);
+        }
+
+
 
         //Transaction Model
         $transactions = new Transaction();

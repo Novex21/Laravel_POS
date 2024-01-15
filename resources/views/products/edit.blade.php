@@ -15,7 +15,7 @@
                         @method('patch')
                         <div class="col-md-4 mb-3">
                             <label for="nameInput">Product Name</label>
-                            <input type="text" class="form-control" id="nameInput" name="name"  value={{ $product->name }}>
+                            <input type="text" class="form-control" id="nameInput" name="name"  value="{{ $product->name }}">
                         </div>
 
                         <div class="col-md-4 mb-3">

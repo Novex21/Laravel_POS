@@ -11,7 +11,9 @@
             </a>
         </div>
         <div class="card-body">
-            {{$users->links()}}
+            <div class="my-2">
+                {{$users->links()}}
+            </div>
             <table class="table" >
                 <thead class="text-center">
                     <tr class="h5">

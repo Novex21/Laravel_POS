@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
+
 use App\Models\Category;
+use Illuminate\Http\Request;
+
 
 class CategoryController extends Controller
 {
@@ -13,11 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(5);
-        return view('categories.index',[
-            'categories' => $categories
-        ]);
-        exit();
+        return view('categories.index');
+
     }
 
     /**
@@ -25,23 +23,37 @@ class CategoryController extends Controller
      */
     public function create()
     {
-
+        return view('categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCategoryRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validator = validator(request()->all(), [
+            'name'=> 'required',
+            'code' => 'required',
+            'user' => 'required',
+        ]);
+        if($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        $category = new Category;
+        $category->name = $request->name;
+        $category->code = $request->code;
+        $category->user_id = $request->user;
+        $category->save();
+
+        return redirect(route('categories.index'))->with('Success', 'Category Created Successfully');
+
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(Category $category)
     {
-        //
+
     }
 
     /**
@@ -49,15 +61,29 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        if(! $category) return back()->with('Error','Category Not Found');
+        return view('categories.edit',[
+            'category' => $category
+        ]);
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Request $request, Category $category)
     {
-        //
+        if(! $category) return back()->with('Error','Category Not Found');
+
+        $validator = validator(request()->all(), [
+            'name'=> 'required',
+            'code' => 'required',
+            'user' => 'required',
+        ]);
+        if($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        $category->update($request->all());
+        return redirect(route('categories.index'))->with('Success', 'Category Updated Successfully');
+
     }
 
     /**
@@ -65,6 +91,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if (! $category) {
+            return back()->with('Error','Category Not Found');
+        }
+        $category->delete();
+        return redirect()->back()->with('Success', 'Category Deleted Successfully');
     }
 }

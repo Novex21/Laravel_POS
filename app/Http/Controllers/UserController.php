@@ -59,7 +59,7 @@ class UserController extends Controller
         $user->save();
 
         return redirect(route('users.index'))->with('Success', 'User Created Successfully');
-        exit();
+
 
     }
 
@@ -82,7 +82,7 @@ class UserController extends Controller
         return view('users.edit',[
             'user' => $user,
         ]);
-        exit();
+
     }
 
     /**
@@ -110,7 +110,7 @@ class UserController extends Controller
 
         $user->update($request->all());
         return redirect(route('users.index'))->with('Success', 'User Updated Succeessfully');
-        exit();
+
 
     }
 
@@ -125,7 +125,7 @@ class UserController extends Controller
         }
         $user->delete();
         return back()->with('Success', 'User Deleted Succeessfully');
-        exit();
+
 
     }
 }

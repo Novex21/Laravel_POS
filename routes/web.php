@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -39,6 +40,6 @@ Route::resource('/orders', OrderController::class);
 Route::resource('/products', ProductController::class);
 Route::resource('/users', UserController::class);
 Route::resource('/transactions', TransactionController::class);
-Route::resource('/categories', Category::class);
+Route::resource('/categories', CategoryController::class);
 
 

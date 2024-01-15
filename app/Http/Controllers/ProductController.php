@@ -13,11 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(5);
-        return view('products.index', [
-            'products' => $products
-        ]);
-        exit();
+        return view('products.index');
     }
 
     /**
@@ -29,7 +25,6 @@ class ProductController extends Controller
         return view('products.create', [
             'categories'=>$categories
         ]);
-        exit();
 
     }
 
@@ -69,7 +64,6 @@ class ProductController extends Controller
        $product->save();
 
         return redirect(route('products.index'))->with('Success', 'Product Created Successfully');
-        exit();
 
     }
 
@@ -92,7 +86,6 @@ class ProductController extends Controller
             'product' => $product,
             'categories' => $categories
         ]);
-        exit();
 
     }
 
@@ -124,7 +117,6 @@ class ProductController extends Controller
 
         $product->update($request->all());
         return redirect(route('products.index'))->with('Success', 'Product Updated Successfully');
-        exit();
 
     }
 
@@ -138,7 +130,6 @@ class ProductController extends Controller
         }
         $product->delete();
         return redirect()->back()->with('Success', 'Product Deleted Successfully');
-        exit();
 
     }
 }
